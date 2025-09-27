@@ -2,6 +2,7 @@
 
 const display = document.querySelector(".display");
 const numbers = document.querySelectorAll(".button.number");
+const clearBtn = document.querySelector(".button.clear");
 
 
 let operator = "";
@@ -18,6 +19,12 @@ numbers.forEach(function (number) {
     })
 })
 
+//clear display when btnCLear is clicked!
+clearBtn.addEventListener("click", () => {
+    previousInput = "";
+    currentInput = "";
+    display.value = 0;
+})
 //write function for operation
 function addition(a, b) {
     return a + b;
