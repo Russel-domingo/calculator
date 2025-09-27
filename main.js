@@ -1,11 +1,24 @@
 //create a 3 variable
 
+const display = document.querySelector(".display");
+const numbers = document.querySelectorAll(".button.number");
+
+
 let operator = "";
 let currentInput = "";
 let previousInput = "";
 
-//write function for operation
+//displaying the clicked number
 
+numbers.forEach(function (number) {
+    number.addEventListener("click", function (e) {
+        // console.log(e.target.textContent);
+        currentInput += e.target.textContent;
+        display.value = `${previousInput} ${currentInput}`;
+    })
+})
+
+//write function for operation
 function addition(a, b) {
     return a + b;
 }
@@ -20,6 +33,9 @@ function subtraction (a, b) {
 }
 
 function division (a,b) {
+    if(b === 0) {
+        console.log("zero can't be divided")
+    }
     return a / b;
 }
 
