@@ -1,8 +1,22 @@
-//create a 3 variable
 
+//create a 3 variable
+document.addEventListener("DOMContentLoaded", () =>{
 const display = document.querySelector(".display");
 const numbers = document.querySelectorAll(".button.number");
 const clearBtn = document.querySelector(".button.clear");
+const operateBtn = document.querySelector(".button.calculate");
+const operatorBtn = document.querySelectorAll(".button.operator");
+
+
+operatorBtn.forEach(operatorButton => {
+    operatorButton.addEventListener("click", (e) => {
+        operator = e.target.textContent;
+        previousInput = currentInput;
+        currentInput = "";
+        display.value = `${previousInput} ${operator} ${currentInput}`;
+    });
+});
+
 
 
 let operator = "";
@@ -10,14 +24,33 @@ let currentInput = "";
 let previousInput = "";
 
 //displaying the clicked number
-
 numbers.forEach(function (number) {
     number.addEventListener("click", function (e) {
         // console.log(e.target.textContent);
         currentInput += e.target.textContent;
-        display.value = `${previousInput} ${currentInput}`;
+        if (operator) {
+            display.value = `${previousInput} ${operator} ${currentInput}`
+        } else {
+            display.value = `${previousInput} ${currentInput}`;
+        }
     })
-})
+});
+
+//when user click = then operate
+operateBtn.addEventListener('click', () =>{
+    if(previousInput && currentInput && operator) {
+        const number1 = parseFloat(previousInput);
+        const number2 = parseFloat(currentInput);
+
+        const result = operate(number1, number2, operator);
+
+        display.value = result;
+
+        previousInput = "";
+        currentInput = "";
+        operator = " ";
+    }
+});
 
 //clear display when btnCLear is clicked!
 clearBtn.addEventListener("click", () => {
@@ -41,25 +74,25 @@ function subtraction (a, b) {
 
 function division (a,b) {
     if(b === 0) {
-        console.log("zero can't be divided")
+        console.log("zero can't be divided");
+        return "error";
     }
     return a / b;
 }
 
-function operate (number1, number2, operand) {
-    switch (operand) {
+function operate (number1, number2, operator) {
+    switch (operator) {
         case "+":
-            addition(number1, number2);
-            break;
+            return addition(number1, number2);
         case "*":
-            multiplication(number1, number2);
-            break;
+            return multiplication(number1, number2);
+            
         case "-":
-            subtraction(number1, number2);
+            return subtraction(number1, number2);
             break;
         case "/":
-            division(number1, number1);
-            break;
+            return division(number1, number1);
+          
     }
 }
 let a = 5;
@@ -74,3 +107,5 @@ console.log(sum);
 console.log(product);
 console.log(difference);
 console.log(module);
+
+});
