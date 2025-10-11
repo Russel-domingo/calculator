@@ -10,10 +10,18 @@ const operatorBtn = document.querySelectorAll(".button.operator");
 
 operatorBtn.forEach(operatorButton => {
     operatorButton.addEventListener("click", (e) => {
-        operator = e.target.textContent;
-        previousInput = currentInput;
-        currentInput = "";
-        display.value = `${previousInput} ${operator} ${currentInput}`;
+        expression += `${currentInput} ${e.target.textContent}`;
+        if(previousInput && currentInput && operator) {
+            const result = operate(parseFloat(previousInput), parseFloat(currentInput), operator);
+            previousInput = result;
+            currentInput = "";
+            operator = e.target.textContent;
+        } else {
+            operator = e.target.textContent;
+            previousInput = currentInput;
+            currentInput = "";
+        }
+        display.value = expression;
     });
 });
 
@@ -22,30 +30,24 @@ operatorBtn.forEach(operatorButton => {
 let operator = "";
 let currentInput = "";
 let previousInput = "";
+let expression = "";
 
 //displaying the clicked number
 numbers.forEach(function (number) {
     number.addEventListener("click", function (e) {
         // console.log(e.target.textContent);
         currentInput += e.target.textContent;
-        if (operator) {
-            display.value = `${previousInput} ${operator} ${currentInput}`
-        } else {
-            display.value = `${previousInput} ${currentInput}`;
-        }
-    })
+        display.value = expression + " "  + currentInput;
+    });
 });
 
 //when user click = then operate
 operateBtn.addEventListener('click', () =>{
     if(previousInput && currentInput && operator) {
-        const number1 = parseFloat(previousInput);
-        const number2 = parseFloat(currentInput);
-
-        const result = operate(number1, number2, operator);
-
-        display.value = result;
-
+        expression += `${currentInput}`;
+        const result = operate(parseFloat(previousInput) ,parseFloat(currentInput), operator);
+        display.value = `${result}`
+        expression = "";
         previousInput = "";
         currentInput = "";
         operator = " ";
@@ -95,17 +97,17 @@ function operate (number1, number2, operator) {
           
     }
 }
-let a = 5;
-let b = 6;
+// let a = 5;
+// let b = 6;
 
-const sum = addition(a, b);
-const product = multiplication(a, b);
-const difference = subtraction(a, b);
-const module = division(a, b);
+// const sum = addition(a, b);
+// const product = multiplication(a, b);
+// const difference = subtraction(a, b);
+// const module = division(a, b);
 
-console.log(sum);
-console.log(product);
-console.log(difference);
-console.log(module);
+// console.log(sum);
+// console.log(product);
+// console.log(difference);
+// console.log(module);
 
 });
