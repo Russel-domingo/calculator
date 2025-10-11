@@ -93,7 +93,7 @@ function operate (number1, number2, operator) {
             return subtraction(number1, number2);
             break;
         case "/":
-            return division(number1, number1);
+            return division(number1, number2);
           
     }
 }
